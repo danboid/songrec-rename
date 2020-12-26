@@ -1,11 +1,10 @@
 # songrec-rename
 
-songrec-rename is a shell script to automate the naming of music files.
+**songrec-rename** is a shell script to automate the naming of music files.
+It uses the open source Shazam client `songrec` to identify tracks.
 
-It uses the open source Shazam client songrec to identify tracks.
-
-It will rename every wav, flac, ogg and mp3 file in the current directory 
-that the command is run from that can be identified.
+**songrec-rename** will rename every wav, flac, ogg and mp3 file in the 
+current directory that the command is run from that can be identified.
 
 ## Installing songrec under Ubuntu
 
@@ -22,3 +21,6 @@ sudo cp songrec-rename/songrec-rename.sh /usr/local/bin/songrec-rename
 sudo chmod +x /usr/local/bin/songrec-rename
 ```
 
+## Using songrec-rename
+
+`cd` into a diectory containing music files then run `songrec-rename`.
