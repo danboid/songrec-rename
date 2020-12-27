@@ -9,6 +9,7 @@ be identified in the current working directory.
 ## Installing songrec under Ubuntu
 
 ```
+sudo apt update && sudo apt install software-properties-common
 sudo apt-add-repository ppa:marin-m/songrec -y -u
 sudo apt install songrec -y
 ```
