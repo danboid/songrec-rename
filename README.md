@@ -18,8 +18,8 @@ sudo apt install songrec -y
 
 ```
 git clone https://github.com/danboid/songrec-rename.git
-sudo cp songrec-rename/songrec-rename.sh /usr/local/bin/songrec-rename
-sudo chmod +x /usr/local/bin/songrec-rename
+cp songrec-rename/songrec-rename.sh ~/.local/bin/songrec-rename
+chmod +x ~/.local/bin/songrec-rename
 ```
 
 ## Using songrec-rename
