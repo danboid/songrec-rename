@@ -24,4 +24,4 @@ sudo chmod +x /usr/local/bin/songrec-rename
 
 ## Using songrec-rename
 
-`cd` into a directory containing music files then run `songrec-rename`
+`cd` into a directory containing music files (wav, flac, ogg or mp3) then run `songrec-rename`
