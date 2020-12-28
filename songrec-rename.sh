@@ -8,15 +8,15 @@ then
     exit
 fi
 
-for t in $(ls *); do
+for t in *; do
     songrec audio-file-to-recognized-song "$t" > srr.tmp
-    subtitle=$(grep subtitle srr.tmp | cut -c 18- | sed 's/",//')
-    title=$(grep title srr.tmp | sed -n 5p | cut -c 15- | sed 's/",//')
-    extension=$(sed 's/.*\.//' "$t")
+    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//')
+    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g')
+    extension=$(echo $t | sed 's/.*\.//')
 	
     if [ ! -z "$title" ]; then 
-        echo "Renaming $t to $subtitle - $title$extension"
-        mv "$t" "$subtitle - $title.$extension"
+        echo "Renaming $t to $subtitle - $title.$extension"
+        mv $t "$subtitle - $title.$extension"
     else
         echo "$t is unrecognized by Shazam"
     fi
