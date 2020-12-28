@@ -16,15 +16,21 @@ sudo apt install songrec -y
 
 ## Downloading and installing songrec-rename
 
+Clone this repo:
+
 ```
 git clone https://github.com/danboid/songrec-rename.git
+```
 
-then (under Ubuntu 20.04+)
+then (under Ubuntu 20.04+ or if you have **~/.local/bin** in your $PATH)
 
+```
 cp songrec-rename/songrec-rename.sh ~/.local/bin/songrec-rename
+```
 
-or (under Ubuntu 18.04 and earlier)
+or (under Ubuntu 18.04 and earlier, without **~/.local/bin** in your $PATH)
 
+```
 sudo cp songrec-rename/songrec-rename.sh /usr/local/bin/songrec-rename
 ```
 
