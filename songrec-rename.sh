@@ -10,8 +10,8 @@ fi
 
 for t in *; do
     songrec audio-file-to-recognized-song "$t" > srr.tmp
-    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//')
-    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g')
+    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g')
+    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g')
     extension=$(echo $t | sed 's/.*\.//')
 	
     if [ ! -z "$title" ]; then 
