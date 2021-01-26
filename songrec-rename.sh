@@ -1,6 +1,11 @@
 #!/bin/bash
-# songrec-rename - automatic naming of music files using songrec 
-# by Dan MacDonald 2020
+# songrec-rename - automatic naming of music files using songrec
+# by Dan MacDonald
+#
+# If run with no options, it will rename music files in the current dir.
+# If you add the -r option it will rename all music files in all folders 
+# including and within the current one.
+
 
 if ! command -v songrec &> /dev/null
 then
@@ -8,6 +13,13 @@ then
     exit
 fi
 
+while getopts r opt; do
+   case $opt in
+     r ) recurse=1 ;;
+  esac
+done
+
+srr() {
 for t in *; do
     songrec audio-file-to-recognized-song "$t" > srr.tmp
     subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g')
@@ -16,7 +28,7 @@ for t in *; do
 	
     if [ ! -z "$title" ]; then 
         echo "Renaming $t to $subtitle - $title.$extension"
-        mv "$t" "$subtitle - $title.$extension"
+        mv "$t" "$subtitle-$title.$extension"
     else
         echo "$t is unrecognized by Shazam"
     fi
@@ -25,3 +37,14 @@ for t in *; do
     subtitle=""
     rm srr.tmp
 done
+}
+
+if [[ "${recurse}" -eq 1 ]] ; then
+    BASEDIR=$(pwd)
+    find . -type d | sort | while read -r DIR; do
+        cd "$BASEDIR/$DIR" || exit 1
+        srr
+    done
+    else
+        srr
+fi
