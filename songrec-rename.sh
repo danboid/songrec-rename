@@ -27,7 +27,7 @@ for t in *; do
     extension=$(echo $t | sed 's/.*\.//')
 	
     if [ ! -z "$title" ]; then 
-        echo "Renaming $t to $subtitle - $title.$extension"
+        echo "Renaming $t to $subtitle-$title.$extension"
         mv "$t" "$subtitle-$title.$extension"
     else
         echo "$t is unrecognized by Shazam"
