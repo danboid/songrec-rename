@@ -28,7 +28,7 @@ for t in *; do
 	
     if [ ! -z "$title" ]; then 
         echo "Renaming $t to $subtitle-$title.$extension"
-        mv "$t" "$subtitle-$title.$extension"
+        mv -n "$t" "$subtitle-$title.$extension"
     else
         echo "$t is unrecognized by Shazam"
     fi
