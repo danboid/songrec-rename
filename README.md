@@ -37,4 +37,6 @@ sudo cp songrec-rename/songrec-rename.sh /usr/local/bin/songrec-rename
 
 `cd` into a directory containing music files (wav, flac, ogg or mp3) then run `songrec-rename`. If you add the `-r` option it will rename all music files in all directories within the current one, recursively.
 
+If you have **id3tool** installed and you use the **-i** option **songrec-rename** will add id3 tags to mp3 files.
+
 Note that if you have more than one copy of a track within a directory, **songrec-rename** will only rename the first instance of any duplicated tracks.
