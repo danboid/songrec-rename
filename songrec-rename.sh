@@ -41,14 +41,17 @@ fi
 
 srr() {
 for t in *; do
+    # Try to identify current file.
     songrec audio-file-to-recognized-song "$t" > srr.tmp
     
-    # subtitle is the artist name
+    # subtitle is the artist name.
     subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g')
-    # title is the name of the track
+    
+    # title is the name of the track.
     title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g')
-    # the file extension / type
-    extension=$(echo $t | sed 's/.*\.//')
+    
+    # Store the file extension.
+    extension=$(echo "$t" | sed 's/.*\.//')
     
     if [ "$id3" -eq 1 ]; then
         album=$(grep -A 2 metadata srr.tmp | sed '1,2d' | cut -c 22- | sed 's/",//')
@@ -66,8 +69,8 @@ for t in *; do
         echo "$t is unrecognized by Shazam."
     fi
 	
-	year=""
-	album=""
+    year=""
+    album=""
     title=""
     subtitle=""
     rm srr.tmp
