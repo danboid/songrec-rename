@@ -68,12 +68,12 @@ for t in *; do
     else
         echo "$t is unrecognized by Shazam."
     fi
-	
+
+	rm srr.tmp &&
     year=""
     album=""
     title=""
     subtitle=""
-    rm srr.tmp
 done
 }
 
