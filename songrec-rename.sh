@@ -44,11 +44,11 @@ for t in *; do
     # Try to identify current file.
     songrec audio-file-to-recognized-song "$t" > srr.tmp
     
-    # subtitle is the artist name.
-    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g')
+# subtitle is the artist name.
+    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # title is the name of the track.
-    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g')
+    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # Store the file extension.
     extension=$(echo "$t" | sed 's/.*\.//')
@@ -66,7 +66,7 @@ for t in *; do
         echo "Renaming $t to $subtitle-$title.$extension"
         mv -n "$t" "$subtitle-$title.$extension"
     else
-        echo "$t is unrecognized by Shazam."
+        echo "ERROR: $t is unrecognized by Shazam."
     fi
 
     rm srr.tmp
