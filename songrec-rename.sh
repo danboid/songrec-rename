@@ -39,23 +39,28 @@ if [[ "${id3}" -eq 1 && ! $(command -v id3v2) ]] ; then
     exit
 fi
 
+if ! command -v jq &> /dev/null ; then
+    echo "You must install jq to get the metadata of the mp3 files."
+    exit
+fi
+
 srr() {
 for t in *; do
     # Try to identify current file.
-    songrec audio-file-to-recognized-song "$t" > srr.tmp
+    songrec audio-file-to-recognized-song "$t" > srr.json
     
     # subtitle is the artist name.
-    subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g')
+    subtitle=$(jq -r '.track.subtitle' srr.json | sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # title is the name of the track.
-    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g')
+    title=$(jq -r '.track.title' srr.json | sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # Store the file extension.
     extension=$(echo "$t" | sed 's/.*\.//')
     
     if [ "$id3" -eq 1 ]; then
-        album=$(grep -A 2 metadata srr.tmp | sed '1,2d' | cut -c 22- | sed 's/",//')
-        year=$(grep -A 10 metadata srr.tmp | sed '1,10d' | cut -c 22- | sed 's/",//')
+        album=$(jq -r 'if .track.sections[0].metadata[0].text == null then "" else .track.sections[0].metadata[0].text end' srr.json)
+        year=$(jq -r 'if .track.sections[0].metadata[2].text == null then "" else .track.sections[0].metadata[2].text end' srr.json)
     fi
 
     if [ ! -z "$title" ]; then 
@@ -63,19 +68,20 @@ for t in *; do
             echo "Adding id3 tags to $subtitle-$title."
             id3v2 -t "$title" -a "$subtitle" -A "$album" -y "$year" "$t"
         fi
+
         echo "Renaming $t to $subtitle-$title.$extension"
         mv -n "$t" "$subtitle-$title.$extension"
     else
-        echo "$t is unrecognized by Shazam."
+        echo "ERROR: $t is unrecognized by Shazam."
     fi
 
-    rm srr.tmp
-    while [ -f srr.tmp ];
+    rm srr.json
+    while [ -f srr.json ];
     do
         sleep 1
     done
     sleep 1
-    
+	
     year=""
     album=""
     title=""
