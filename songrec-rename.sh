@@ -34,8 +34,8 @@ while getopts ":ri" opt; do
   esac
 done
 
-if [[ "${id3}" -eq 1 && ! $(command -v id3tool) ]] ; then
-    echo "You must install id3tool to add id3tags to mp3 files."
+if [[ "${id3}" -eq 1 && ! $(command -v id3v2) ]] ; then
+    echo "You must install id3v2 to add id3tags to mp3 files."
     exit
 fi
 
@@ -57,11 +57,11 @@ for t in *; do
         album=$(grep -A 2 metadata srr.tmp | sed '1,2d' | cut -c 22- | sed 's/",//')
         year=$(grep -A 10 metadata srr.tmp | sed '1,10d' | cut -c 22- | sed 's/",//')
     fi
-	
+
     if [ ! -z "$title" ]; then 
         if [[ "$extension" == "mp3" && "$id3" -eq 1 ]]; then
             echo "Adding id3 tags to $subtitle-$title."
-            id3tool -t "$title" -r "$subtitle" -a "$album" -y "$year" "$t"
+            id3v2 -t "$title" -a "$subtitle" -A "$album" -y "$year" "$t"
         fi
         echo "Renaming $t to $subtitle-$title.$extension"
         mv -n "$t" "$subtitle-$title.$extension"
