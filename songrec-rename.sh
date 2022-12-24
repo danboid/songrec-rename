@@ -48,7 +48,7 @@ for t in *; do
     subtitle=$(grep '"subtitle"' srr.tmp | cut -c 18- | sed 's/",//'| sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # title is the name of the track.
-    title=$(grep '"title"' srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
+    title=$(grep tracktitle srr.tmp | cut -c 24- | sed 's/"//' | sed 's/+/ /g' | sed 's/%..//g' | sed 's/&/and/g' | sed 's/*//g' | sed 's/"//g' | sed 's/\\//g')
     
     # Store the file extension.
     extension=$(echo "$t" | sed 's/.*\.//')
