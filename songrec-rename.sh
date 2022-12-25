@@ -11,12 +11,12 @@
 # If you add the -r option it will rename all music files in all folders 
 # including and within the current one.
 
-# Use the -i option to add id3 tags to mp3 files if you have id3tool installed.
+# Use the -i option to add id3 tags to mp3 files if you have id3v2 installed.
 
 
 if ! command -v songrec &> /dev/null
 then
-    echo "You must install songrec before you can run this script."
+    echo "You must install songrec before you can run songrec-rename."
     exit
 fi
 
@@ -40,7 +40,7 @@ if [[ "${id3}" -eq 1 && ! $(command -v id3v2) ]] ; then
 fi
 
 if ! command -v jq &> /dev/null ; then
-    echo "You must install jq to get the metadata of the mp3 files."
+    echo "You must install jq to use songrec-rename."
     exit
 fi
 
@@ -72,7 +72,7 @@ for t in *; do
         echo "Renaming $t to $subtitle-$title.$extension"
         mv -n "$t" "$subtitle-$title.$extension"
     else
-        echo "ERROR: $t is unrecognized by Shazam."
+        echo "ERROR: $t is unrecognized by songrec."
     fi
 
     rm srr.json
