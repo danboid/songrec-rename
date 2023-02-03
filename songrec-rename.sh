@@ -63,7 +63,7 @@ for t in *; do
         year=$(jq -r 'if .track.sections[0].metadata[2].text == null then "" else .track.sections[0].metadata[2].text end' srr.json)
     fi
 
-    if [ ! -z "$title" ]; then 
+    if [[ "$title" != "null" ]]; then
         if [[ "$extension" == "mp3" && "$id3" -eq 1 ]]; then
             echo "Adding id3 tags to $subtitle-$title."
             id3v2 -t "$title" -a "$subtitle" -A "$album" -y "$year" "$t"
