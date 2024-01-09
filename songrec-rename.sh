@@ -46,6 +46,7 @@ fi
 
 srr() {
 for t in *; do
+  if [ -f "$t" ]; then
     # Try to identify current file.
     songrec audio-file-to-recognized-song "$t" > srr.json
     
@@ -86,6 +87,7 @@ for t in *; do
     album=""
     title=""
     subtitle=""
+  fi
 done
 }
 
